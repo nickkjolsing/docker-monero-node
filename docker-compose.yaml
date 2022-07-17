@@ -2,6 +2,7 @@ version: '3'
 volumes:
   grafana:
   prometheus:
+  bitmonero:
 services:
   prometheus:
     image: prom/prometheus:v2.18.0
@@ -24,7 +25,7 @@ services:
     container_name: grafana
     restart: unless-stopped
     ports:
-      - 127.0.0.1:3000:3000
+      - 3000:3000
     environment:
       HOSTNAME: grafana
       GF_SERVER_ROOT_URL: "${GRAFANA_URL}"
@@ -62,7 +63,7 @@ services:
       dockerfile: monero_nocompile
     restart: unless-stopped
     volumes:
-      - ${DATA_DIR:-./data}:/data
+      - bitmonero:/data
     ports:
       - ${P2P_PORT:-18080}:18080                    # p2p
       - ${RESTRICTED_PORT:-18081}:18081             # restricted rpc
